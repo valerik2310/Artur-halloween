@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SECRET FILE — ARTHUR</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ color:#eee;
+ background:radial-gradient(ellipse,#291507,#080808 75%);
+ font-family:Georgia,serif;
+ overflow-x:hidden;
+}
+
+/* Частинки */
+#particles{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ overflow:hidden;
+ z-index:1;
+}
+
+.particle{
+ position:absolute;
+ bottom:-20px;
+ background:#ff852c;
+ border-radius:50%;
+ box-shadow:0 0 12px #ff852c;
+ animation:rise linear infinite;
+}
+
+@keyframes rise{
+ 0%{transform:translateY(0);opacity:0}
+ 15%{opacity:1}
+ 100%{transform:translateY(-110vh) translateX(70px);opacity:0}
+}
+
+/* Туман */
+.fog{
+ position:fixed;
+ inset:-50%;
+ pointer-events:none;
+ background:radial-gradient(ellipse,#9c46152c,transparent 60%);
+ animation:fog 12s ease-in-out infinite alternate;
+}
+
+@keyframes fog{
+ from{transform:translate(-5%,0) scale(1)}
+ to{transform:translate(5%,3%) scale(1.2)}
+}
+
+/* Картка */
+.card{
+ position:relative;
+ z-index:2;
+ width:100%;
+ max-width:650px;
+ padding:40px 25px;
+ background:#12110fee;
+ border:1px solid #a65316;
+ box-shadow:0 0 50px #8b390a55;
+ text-align:center;
+ animation:appear 1.2s ease;
+}
+
+@keyframes appear{
+ from{opacity:0;transform:translateY(35px) scale(.96)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.stamp{
+ color:#ff852c;
+ border:1px solid;
+ padding:8px;
+ display:inline-block;
+ letter-spacing:4px;
+ transform:rotate(-4deg);
+ animation:blink 2s infinite;
+}
+
+@keyframes blink{
+ 50%{opacity:.35}
+}
+
+.small{
+ color:#a9a09a;
+ font:12px monospace;
+ letter-spacing:2px;
+}
+
+h1{font-size:clamp(35px,8vw,55px)}
+h1 span{color:#ff852c}
+hr{border-color:#583319;margin:25px 0}
+
+button{
+ background:#e87820;
+ color:#130b05;
+ border:0;
+ padding:16px 25px;
+ font-weight:bold;
+ letter-spacing:2px;
+ cursor:pointer;
+ width:100%;
+ margin-top:25px;
+ font-size:14px;
+ transition:.3s;
+}
+
+button:hover{
+ background:#ffab55;
+ transform:scale(1.04);
+ box-shadow:0 0 25px #ff852c;
+}
+
+/* Сюрприз */
+#surprise{display:none}
+
+.message{
+ font-size:21px;
+ line-height:1.7;
+}
+
+.highlight{color:#ff852c}
+
+.pumpkin{
+ font-size:65px;
+ animation:bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce{
+ 0%,100%{transform:rotate(-7deg) translateY(0)}
+ 50%{transform:rotate(7deg) translateY(-12px)}
+}
+
+/* Спалах */
+#flash{
+ position:fixed;
+ inset:0;
+ background:#ff852c;
+ opacity:0;
+ pointer-events:none;
+ z-index:10;
+}
+
+.flash{animation:flash .7s ease}
+
+@keyframes flash{
+ 0%{opacity:0}
+ 20%{opacity:.35}
+ 100%{opacity:0}
+}
+
+/* Поява сюрпризу */
+#surprise.show{
+ animation:reveal 1.1s ease;
+}
+
+@keyframes reveal{
+ from{opacity:0;transform:scale(.85);filter:blur(10px)}
+ to{opacity:1;transform:scale(1);filter:blur(0)}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="fog"></div>
+<div id="particles"></div>
+<div id="flash"></div>
+
+<!-- ПЕРШИЙ ЕКРАН -->
+<div class="card" id="first">
+
+ <div class="stamp">TOP SECRET</div>
+
+ <p class="small">АРХІВ / ДОСТУП ОБМЕЖЕНО</p>
+
+ <h1>ДОСЬЄ <span>АРТУР</span></h1>
+
+ <p>Спеціальна справа №0101-A</p>
+
+ <hr>
+
+ <p class="small">ОБ'ЄКТ: АРТУР</p>
+ <p class="small">ДАТА: 01 ЛИСТОПАДА</p>
+ <p class="small">РІВЕНЬ ТАЄМНОСТІ: МАКСИМАЛЬНИЙ</p>
+
+ <p>
+ Виявлено секретну інформацію.<br>
+ Для продовження потрібен дозвіл об'єкта.
+ </p>
+
+ <button onclick="openFile()">
+ ВІДКРИТИ ДОСЬЄ
+ </button>
+
+ <p class="small">УВАГА: ПОПЕРЕДУ НЕСПОДІВАНКА</p>
+
+</div>
+
+<!-- ФІНАЛЬНИЙ ЕКРАН -->
+<div class="card" id="surprise">
+
+ <div class="pumpkin">🎃</div>
+
+ <p class="small">ДОСЬЄ РОЗСЕКРЕЧЕНО</p>
+
+ <h1>З ХЕЛЛОУЇНОМ!</h1>
+
+ <hr>
+
+ <p class="message">
+ Артуре! Тебе викрито! 😈<br><br>
+
+ Ти офіційно входиш до списку
+ <span class="highlight">найкрутіших людей</span>
+ цього архіву.
+ </p>
+
+ <div style="background:#24170e;padding:20px">
+
+ <h2>🎁 СЕКРЕТНИЙ СЮРПРИЗ</h2>
+
+ <p class="message">
+
+ Найголовніший сюрприз — це те,
+ що в тебе є брат, який хотів
+ зробити для тебе щось особливе! ❤️
+
+ <br><br>
+
+Бажаю тобі здоров'я, щастя,
+ побільше хороших новин і спокійних днів.
+
+ <br><br>
+
+ Бережи себе! 🤍
+
+ <br><br>
+
+ <span class="highlight">Від твого брата.</span>
+
+ </p>
+ </div>
+
+ <hr>
+
+ <p class="small">
+ СПРАВУ ЗАКРИТО · 01.11
+ </p>
+
+</div>
+
+<script>
+
+/* Створення літаючих частинок */
+const container=document.getElementById("particles");
+
+for(let i=0;i<40;i++){
+
+ const p=document.createElement("div");
+
+ p.className="particle";
+
+ p.style.left=Math.random()*100+"%";
+
+ p.style.animationDuration=(5+Math.random()*9)+"s";
+
+ p.style.animationDelay=Math.random()*8+"s";
+
+ const size=2+Math.random()*4;
+
+ p.style.width=size+"px";
+ p.style.height=size+"px";
+
+ container.appendChild(p);
+}
+
+/* Відкриття досьє */
+function openFile(){
+
+ const flash=document.getElementById("flash");
+
+ flash.classList.remove("flash");
+
+ void flash.offsetWidth;
+
+ flash.classList.add("flash");
+
+ document.getElementById("first").style.display="none";
+
+ const surprise=document.getElementById("surprise");
+
+ surprise.style.display="block";
+
+ surprise.classList.add("show");
+
+ document.title="ДОСЬЄ РОЗСЕКРЕЧЕНО — АРТУР";
+}
+
+</script>
+
+</body>
+</html>
